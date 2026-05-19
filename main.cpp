@@ -4,6 +4,7 @@
 
 int main(int argc, char** argv)
 {
+    MyModel::load_data();
     DNest4::start<MyModel>(argc, argv);
     return 0;
 }

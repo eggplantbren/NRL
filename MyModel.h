@@ -12,9 +12,13 @@ class MyModel
         static std::vector<int> home_teams;
         static std::vector<int> away_teams;
         static std::vector<double> home_team_win_margins;
+
+    public:
         static void load_data();
 
     private:
+
+
         DNest4::RJObject<MyConditionalPrior> abilities;
         double s;     // Scale parameter for likelihood
         double nu;    // Shape parameter for likelihood
