@@ -20,6 +20,7 @@ class MyModel
 
 
         DNest4::RJObject<MyConditionalPrior> abilities;
+        double home_bonus;
         double s;     // Scale parameter for likelihood
         double nu;    // Shape parameter for likelihood
 

@@ -36,6 +36,7 @@ MyModel::MyModel()
 void MyModel::from_prior(DNest4::RNG& rng)
 {
     abilities.from_prior(rng);
+    home_bonus = -20.0 + 40.0*rng.rand();
     s  = exp(log(0.1) + log(1E3)*rng.rand());
     nu = exp(log(0.1) + log(1E3)*rng.rand());
 }
@@ -46,7 +47,14 @@ double MyModel::perturb(DNest4::RNG& rng)
 
     if(rng.rand() <= 0.5)
         logH += abilities.perturb(rng);
-    else if(rng.rand() <= 0.5)
+
+    int which = rng.rand_int(3);
+    if(which == 0)
+    {
+        home_bonus += 40.0*rng.randh();
+        DNest4::wrap(home_bonus, -20.0, 20.0);
+    }
+    else if(which == 1)
     {
         s = log(s);
         s += log(1E3)*rng.randh();
@@ -73,7 +81,7 @@ double MyModel::log_likelihood() const
     for(size_t i=0; i<home_teams.size(); ++i)
     {
         double& y = home_team_win_margins[i];
-        double mu = as[home_teams[i]][0] - as[away_teams[i]][0];
+        double mu = home_bonus + as[home_teams[i]][0] - as[away_teams[i]][0];
 		logL += std::lgamma(0.5*(nu + 1.0)) - std::lgamma(0.5*nu)
 			        -0.5*log(M_PI*nu) -0.5*log(ssq)
         			-0.5*(nu + 1.0)*log(1.0 + pow(y - mu, 2)/ssq/nu);
@@ -84,6 +92,7 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
+    out << home_bonus << ' ' << nu << ' ' << s << ' ';
     abilities.print(out);
 }
 
