@@ -3,7 +3,7 @@ from scipy.stats import t
 import sys
 
 
-def prob(i, j, posterior_sample, neutral=False):
+def prob(team1, team2, posterior_sample, neutral=False):
     abilities = posterior_sample[:, -17:]
     probs = np.empty(abilities.shape[0])
     for i in range(abilities.shape[0]):
@@ -11,8 +11,8 @@ def prob(i, j, posterior_sample, neutral=False):
         if neutral:
             home_bonus = 0.0
 
-        loc = home_bonus + abilities[i, teams[0]] \
-                - abilities[i, teams[1]]
+        loc = home_bonus + abilities[i, team1] \
+                - abilities[i, team2]
         shape = posterior_sample[i, 1]
         scale = posterior_sample[i, 2]
         probs[i] = 1.0 - t.cdf(0.0, df=shape, loc=loc, scale=scale)
