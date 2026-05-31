@@ -3,6 +3,7 @@ log_prior_weights.txt
 main
 matches.txt
 posterior_sample.txt
+__pycache__
 sample.txt
 sample_info.txt
 sampler_state.txt
