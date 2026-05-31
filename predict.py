@@ -2,14 +2,21 @@ import numpy as np
 from scipy.stats import t
 import sys
 
-
 posterior_sample = np.loadtxt("posterior_sample.txt")
 
 if __name__ == "__main__":
 
+    # Build team lookup
+    lookup = dict()
+    with open("teams.txt") as f:
+        for line in f:
+            parts = line.split(" ")
+            lookup[parts[-1][0:-1].lower()] = int(parts[0])
+    f.close()
+
     neutral = "--neutral" in sys.argv
-    teams = [int(i) for i in sys.argv[-2:]]
-    assert(len(teams) == 2)
+    assert(len(sys.argv) >= 3)
+    teams = [lookup[name] for name in sys.argv[-2:]]
 
     abilities = posterior_sample[:, -17:]
     probs = np.empty(abilities.shape[0])
