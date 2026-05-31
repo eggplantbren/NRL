@@ -13,8 +13,9 @@ pmax = []
 for i in range(17):
     for j in range(i):
         p = prob(i, j, posterior_sample, neutral=True)
-        pmax.append(np.max([p, 1.0-p]))
-        H.append(-p*np.log(p) - (1.0 - p)*np.log(1.0 - p))
+        p = np.array([p, 1.0 - p])
+        pmax.append(np.max(p))
+        H.append(-np.sum(p*np.log(p + 1E-300)))
         print(i, j, flush=True)
 print(np.mean(H))
 
