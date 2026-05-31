@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     neutral = "--neutral" in sys.argv
     assert(len(sys.argv) >= 3)
-    teams = [lookup[name] for name in sys.argv[-2:]]
+    teams = [lookup[name.lower()] for name in sys.argv[-2:]]
 
     abilities = posterior_sample[:, -17:]
     probs = np.empty(abilities.shape[0])
