@@ -36,7 +36,7 @@ MyModel::MyModel()
 void MyModel::from_prior(DNest4::RNG& rng)
 {
     abilities.from_prior(rng);
-    home_bonus = -20.0 + 40.0*rng.rand();
+    home_bonus = 2.0*tan(M_PI*(rng.rand() - 0.5));
     s  = exp(log(0.1) + log(1E3)*rng.rand());
     nu = exp(log(0.1) + log(1E3)*rng.rand());
 }
@@ -51,8 +51,10 @@ double MyModel::perturb(DNest4::RNG& rng)
     int which = rng.rand_int(3);
     if(which == 0)
     {
-        home_bonus += 40.0*rng.randh();
-        DNest4::wrap(home_bonus, -20.0, 20.0);
+        home_bonus = atan(home_bonus/2.0)/M_PI + 0.5;
+        home_bonus += rng.randh();
+        DNest4::wrap(home_bonus, 0.0, 1.0);
+        home_bonus = 2.0*tan(M_PI*(home_bonus - 0.5));
     }
     else if(which == 1)
     {

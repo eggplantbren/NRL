@@ -5,5 +5,6 @@ matches.txt
 posterior_sample.txt
 sample.txt
 sample_info.txt
+sampler_state.txt
 teams.txt
 weights.txt
