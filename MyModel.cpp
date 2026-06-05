@@ -10,7 +10,7 @@ int MyModel::num_teams = 0;
 
 void MyModel::load_data()
 {
-    std::fstream fin("nba_matches.txt", std::ios::in);
+    std::fstream fin("matches.txt", std::ios::in);
 
     // Skip header
     std::string header;

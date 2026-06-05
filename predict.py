@@ -4,7 +4,9 @@ import sys
 
 
 def prob(team1, team2, posterior_sample, neutral=False):
-    abilities = posterior_sample[:, -17:]
+    num_teams = posterior_sample.shape[1] - 7
+
+    abilities = posterior_sample[:, -num_teams:]
     probs = np.empty(abilities.shape[0])
     for i in range(abilities.shape[0]):
         home_bonus = posterior_sample[i, 0]
