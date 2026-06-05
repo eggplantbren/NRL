@@ -4,6 +4,7 @@
 #include "DNest4/code/DNest4.h"
 #include "MyConditionalPrior.h"
 #include <ostream>
+#include <set>
 
 class MyModel
 {
@@ -12,6 +13,8 @@ class MyModel
         static std::vector<int> home_teams;
         static std::vector<int> away_teams;
         static std::vector<double> home_team_win_margins;
+        static std::set<int> teams;
+        static int num_teams;
 
     public:
         static void load_data();

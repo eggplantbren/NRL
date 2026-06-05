@@ -5,10 +5,12 @@
 std::vector<int> MyModel::home_teams;
 std::vector<int> MyModel::away_teams;
 std::vector<double> MyModel::home_team_win_margins;
+std::set<int> MyModel::teams;
+int MyModel::num_teams = 0;
 
 void MyModel::load_data()
 {
-    std::fstream fin("matches.txt", std::ios::in);
+    std::fstream fin("nba_matches.txt", std::ios::in);
 
     // Skip header
     std::string header;
@@ -22,13 +24,19 @@ void MyModel::load_data()
         away_teams.push_back(away_team);
         double margin = home_score - away_score;
         home_team_win_margins.push_back(margin);
+        teams.insert(home_team);
+        teams.insert(away_team);
     }
 
     fin.close();
+
+    num_teams = teams.size();
+    std::cout << "# Read " << home_teams.size() << " matches." << std::endl;
+    std::cout << "# Detected " << num_teams << " teams." << std::endl;
 }
 
 MyModel::MyModel()
-:abilities(1, 17, true, MyConditionalPrior())
+:abilities(1, num_teams, true, MyConditionalPrior())
 {
 
 }
