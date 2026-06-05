@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 posterior_sample = np.loadtxt("posterior_sample.txt")
 H = []
 pmax = []
+num_teams = posterior_sample.shape[1] - 7
 
-for i in range(17):
+for i in range(num_teams):
     for j in range(i):
         p = prob(i, j, posterior_sample, neutral=True)
         p = np.array([p, 1.0 - p])
