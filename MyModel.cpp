@@ -102,6 +102,7 @@ double MyModel::log_likelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
+    out << std::setprecision(12);
     out << home_bonus << ' ' << nu << ' ' << s << ' ';
     abilities.print(out);
 }
