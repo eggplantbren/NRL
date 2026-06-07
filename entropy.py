@@ -16,9 +16,9 @@ for i in range(num_teams):
         p = prob(i, j, posterior_sample, neutral=True)
         p = np.array([p, 1.0 - p])
         pmax.append(np.max(p))
-        H.append(-np.sum(p*np.log(p + 1E-300)))
+        H.append(-np.sum(p*np.log(p + 1E-300)/np.log(2.0)))
         print(i, j, flush=True)
-print(np.mean(H))
+print(f"{np.mean(H)} bits.")
 
 plt.hist(pmax, 100)
 plt.xlabel("Winning Probability of Favourite")
